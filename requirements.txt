@@ -1,0 +1,15 @@
+fastapi>=0.95.0
+uvicorn>=0.22.0
+pymongo>=4.3.3
+motor>=3.1.2
+python-jose>=3.3.0
+passlib>=1.7.4
+python-dotenv>=1.0.0
+python-multipart>=0.0.6
+bcrypt==4.0.1
+email-validator>=2.0.0
+cryptography>=41.0.0
+aiofiles>=23.1.0
+python-magic>=0.4.27
+requests>=2.31.0
+certifi>=2024.4.26 
