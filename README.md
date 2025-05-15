@@ -20,6 +20,26 @@ A secure file sharing system with two user types (Operations and Client) built w
   - Encrypted download URLs
   - Email verification
 
+## Tech Stack
+
+- **Backend**: 
+  - [FastAPI](https://fastapi.tiangolo.com/) - High-performance Python web framework
+  - [Pydantic](https://pydantic-docs.helpmanual.io/) - Data validation and settings management
+  - [Python-Jose](https://github.com/mpdavis/python-jose) - JavaScript Object Signing and Encryption for JWT
+  - [Passlib](https://passlib.readthedocs.io/) - Password hashing library
+  - [PyMongo/Motor](https://motor.readthedocs.io/) - Asynchronous MongoDB driver
+
+- **Database**:
+  - [MongoDB](https://www.mongodb.com/) - NoSQL document database
+
+- **Security**:
+  - [Bcrypt](https://github.com/pyca/bcrypt/) - Password hashing
+  - [Cryptography](https://cryptography.io/) - Cryptographic recipes and primitives
+
+- **Utilities**:
+  - [Python-dotenv](https://github.com/theskumar/python-dotenv) - Environment variable management
+  - [Uvicorn](https://www.uvicorn.org/) - ASGI server
+
 ## Prerequisites
 
 - Python 3.7+
@@ -61,15 +81,32 @@ pip install -r requirements.txt
 
 3. Configure environment variables (create a .env file):
 ```
+# MongoDB settings
 MONGODB_URL=mongodb://localhost:27017
 DATABASE_NAME=file_sharing_db
 COLLECTION_NAME=users
+
+# JWT settings
 SECRET_KEY=your-secret-key-keep-it-secret
-MAIL_USERNAME=your-email@gmail.com
-MAIL_PASSWORD=your-email-password
+ALGORITHM=HS256
+ACCESS_TOKEN_EXPIRE_MINUTES=30
+
+# Email settings
+MAIL_USERNAME=example@gmail.com
 MAIL_FROM=noreply@example.com
-MAIL_SERVER=smtp.gmail.com
+MAIL_PASSWORD=your-email-password
 MAIL_PORT=587
+MAIL_SERVER=smtp.gmail.com
+MAIL_TLS=true
+MAIL_SSL=false
+
+# Development settings
+DEV_MODE=false
+BYPASS_EMAIL_VERIFICATION=false
+
+# File storage settings
+MAX_FILE_SIZE=52428800
+ALLOWED_EXTENSIONS=pptx,docx,xlsx
 ```
 
 4. Run the application:
@@ -125,7 +162,7 @@ The API will be available at `http://127.0.0.1:8000`
 
 1. **Operations User**:
    - Can upload files (pptx, docx, xlsx only)
-   - Cannot download files
+   - Can download files using secure URLs
 
 2. **Client User**:
    - Cannot upload files
@@ -145,3 +182,25 @@ The API will be available at `http://127.0.0.1:8000`
 Once the server is running, you can access:
 - Interactive API documentation at: `http://localhost:8000/docs`
 - Alternative API documentation at: `http://localhost:8000/redoc` 
+
+## Default Users
+
+The application automatically creates the following default users for testing purposes:
+
+### Operations Users
+These users have privileges to upload files and download files.
+
+1. **ops_admin1**
+   - Email: ops_admin1@example.com
+   - Password: password123
+   - Type: Operations
+
+2. **ops_admin2**
+   - Email: ops_admin2@example.com
+   - Password: password123
+   - Type: Operations
+
+### Client Users
+No default client users are pre-created. You can register new client users through the signup endpoint.
+
+> **Note**: In a production environment, you should remove or change these default accounts for security reasons. 
